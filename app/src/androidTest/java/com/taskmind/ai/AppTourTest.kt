@@ -122,9 +122,12 @@ class AppTourTest {
         back()
 
         // Quick add with natural language
+        shot("04b_after_back")
+        waitForTag("tab_home")
         compose.onNodeWithTag("tab_home").performClick()
-        waitForText("Add task")
-        compose.onNodeWithText("Add task").performClick()
+        shot("04c_home_again")
+        compose.waitUntil(15_000) { compose.onAllNodesWithText("Add task", useUnmergedTree = true).fetchSemanticsNodes().isNotEmpty() }
+        compose.onAllNodesWithText("Add task", useUnmergedTree = true).onFirst().performClick()
         waitForText("New task")
         compose.onAllNodes(hasSetTextAction()).onFirst().performTextInput("Remind me to call the doctor next Wednesday at 11 AM")
         waitForText("Call the doctor")
