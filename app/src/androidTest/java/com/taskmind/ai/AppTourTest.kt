@@ -123,6 +123,7 @@ class AppTourTest {
 
         // Quick add with natural language
         compose.onNodeWithTag("tab_home").performClick()
+        waitForText("Add task")
         compose.onNodeWithText("Add task").performClick()
         waitForText("New task")
         compose.onAllNodes(hasSetTextAction()).onFirst().performTextInput("Remind me to call the doctor next Wednesday at 11 AM")
