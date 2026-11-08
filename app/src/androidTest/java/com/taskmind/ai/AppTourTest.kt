@@ -161,7 +161,7 @@ class AppTourTest {
 
         // Settings
         compose.onNodeWithTag("tab_settings").performClick()
-        waitForText("AI provider")
+        waitForText("Your name")
         shot("11_settings")
         compose.onNodeWithText("Ask to capture tasks on calls").performScrollTo()
         shot("12_settings_calls")
