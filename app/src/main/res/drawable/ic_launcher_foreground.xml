@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Rounded "mind" bubble -->
+    <path android:fillColor="#7C6CFF"
+        android:pathData="M54,26c15.5,0 28,11.6 28,26c0,14.4 -12.5,26 -28,26c-3.3,0 -6.4,-0.5 -9.3,-1.5L33,82l3.2,-10.6C30,66.6 26,59.7 26,52C26,37.6 38.5,26 54,26z" />
+    <!-- Check mark -->
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFF" android:strokeWidth="6"
+        android:strokeLineCap="round" android:strokeLineJoin="round"
+        android:pathData="M42,52l8,8l16,-17" />
+    <!-- Spark -->
+    <path android:fillColor="#5EEAD4"
+        android:pathData="M74,24l2.2,5.8L82,32l-5.8,2.2L74,40l-2.2,-5.8L66,32l5.8,-2.2z" />
+</vector>
