@@ -40,6 +40,7 @@ import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -100,6 +101,11 @@ fun HomeScreen(
                 }
             }
         }
+    }
+
+    // Keep the on-device briefing in step with the task list.
+    LaunchedEffect(state.pendingTotal, state.overdue.size, state.today.size, state.completedToday, state.pendingReview) {
+        if (state.loaded) vm.refreshBriefing(force = false)
     }
 
     Box(Modifier.fillMaxSize()) {

@@ -100,7 +100,7 @@ class HomeViewModel @Inject constructor(
 
     fun refreshBriefing(force: Boolean) {
         viewModelScope.launch {
-            _briefing.value = _briefing.value.copy(loading = true)
+            if (force || _briefing.value.text.isBlank()) _briefing.value = _briefing.value.copy(loading = true)
             val out = runCatching { assistant.dailyBriefing(force) }.getOrNull()
             _briefing.value = if (out != null) BriefingState(out.value, out.engine, false, out.note)
             else BriefingState("Couldn't build your briefing right now.", "On-device", false)

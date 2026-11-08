@@ -17,7 +17,6 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
-import androidx.test.espresso.Espresso
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
@@ -65,6 +64,11 @@ class AppTourTest {
         val bmp = instrumentation.uiAutomation.takeScreenshot() ?: return
         val dir = File(app.getExternalFilesDir(null), "screenshots").apply { mkdirs() }
         FileOutputStream(File(dir, "$name.png")).use { bmp.compress(Bitmap.CompressFormat.PNG, 100, it) }
+    }
+
+    private fun back() {
+        compose.runOnUiThread { compose.activity.onBackPressedDispatcher.onBackPressed() }
+        compose.waitForIdle()
     }
 
     private fun waitForTag(tag: String, timeout: Long = 15_000) {
@@ -115,7 +119,7 @@ class AppTourTest {
         compose.onNodeWithText("Pay electricity bill").performClick()
         waitForText("Priority")
         shot("04_task_editor")
-        Espresso.pressBack()
+        back()
 
         // Quick add with natural language
         compose.onNodeWithTag("tab_home").performClick()
@@ -149,7 +153,7 @@ class AppTourTest {
         compose.onNodeWithText("Approve all").performClick()
         waitForText("Added")
         shot("10_call_approved")
-        Espresso.pressBack()
+        back()
 
         // Settings
         compose.onNodeWithTag("tab_settings").performClick()
