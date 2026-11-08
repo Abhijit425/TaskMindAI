@@ -1,0 +1,7 @@
+Starting: Intent { cmp=com.taskmind.ai/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.taskmind.ai/.MainActivity
+TotalTime: 1524
+WaitTime: 1562
+Complete

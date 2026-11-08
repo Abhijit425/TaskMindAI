@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.taskmind.ai.AppTourTest" tests="3" failures="0" errors="0" skipped="0" time="54.139" timestamp="2026-11-08T07:28:17" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 14" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="tourEveryScreen" classname="com.taskmind.ai.AppTourTest" time="52.538" />
+  <testcase name="callSessionCascadeAndPendingCount" classname="com.taskmind.ai.DatabaseTest" time="0.909" />
+  <testcase name="tasksSubtasksDependenciesAndPriorityOrdering" classname="com.taskmind.ai.DatabaseTest" time="0.108" />
+</testsuite>

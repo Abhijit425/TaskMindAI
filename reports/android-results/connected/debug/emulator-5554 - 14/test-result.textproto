@@ -1,0 +1,172 @@
+# 2026-11-08T07:28:17.684954799Z:
+test_suite_meta_data {
+  scheduled_test_case_count: 3
+}
+test_status: PASSED
+test_result {
+  test_case {
+    test_class: "AppTourTest"
+    test_package: "com.taskmind.ai"
+    test_method: "tourEveryScreen"
+    start_time {
+      seconds: 1794122843
+      nanos: 457000000
+    }
+    end_time {
+      seconds: 1794122895
+      nanos: 969000000
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.taskmind.ai.AppTourTest-tourEveryScreen.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "DatabaseTest"
+    test_package: "com.taskmind.ai"
+    test_method: "callSessionCascadeAndPendingCount"
+    start_time {
+      seconds: 1794122896
+      nanos: 34000000
+    }
+    end_time {
+      seconds: 1794122896
+      nanos: 972000000
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.taskmind.ai.DatabaseTest-callSessionCascadeAndPendingCount.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "DatabaseTest"
+    test_package: "com.taskmind.ai"
+    test_method: "tasksSubtasksDependenciesAndPriorityOrdering"
+    start_time {
+      seconds: 1794122896
+      nanos: 978000000
+    }
+    end_time {
+      seconds: 1794122897
+      nanos: 83000000
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.taskmind.ai.DatabaseTest-tasksSubtasksDependenciesAndPriorityOrdering.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+output_artifact {
+  label {
+    label: "test-results.log"
+    namespace: "com.google.testing.platform.runtime.android.driver.AndroidInstrumentationDriver"
+  }
+  source_path {
+    path: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/testlog/test-results.log"
+  }
+  type: TEST_DATA
+  mime_type: "text/plain"
+}

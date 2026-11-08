@@ -1,0 +1,37 @@
+INFO: Constructing runner from config.
+INFO: Configuring Android Instrumentation driver: android_instrumentation_runtime {
+  instrumentation_info {
+    app_package: "com.taskmind.ai"
+    test_package: "com.taskmind.ai.test"
+    test_runner_class: "androidx.test.runner.AndroidJUnitRunner"
+  }
+  instrumentation_args {
+    args_map {
+      key: "additionalTestOutputDir"
+      value: "/sdcard/Android/media/com.taskmind.ai/additional_test_output"
+    }
+  }
+}
+am_instrument_timeout: 31536000
+
+INFO: Configuring AndroidTestApkInstallerPlugin: apks_to_install {
+  apk_paths: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/apk/debug/app-debug.apk"
+  install_options {
+  }
+}
+apks_to_install {
+  apk_paths: "/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
+  install_options {
+  }
+}
+
+INFO: No installables found in test fixture. Nothing to install.
+INFO: Installing [/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/apk/debug/app-debug.apk] on device emulator-5554.
+INFO: Installing [/home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk] on device emulator-5554.
+INFO: Start logcat streaming.
+INFO: Running Android Instrumentation driver.
+INFO: Copying files from device to host: /sdcard/Android/media/com.taskmind.ai/additional_test_output to /home/runner/work/TaskMindAI/TaskMindAI/app/build/outputs/connected_android_test_additional_output/debugAndroidTest/connected/emulator-5554 - 14
+INFO: Stop logcat streaming.
+INFO: Execute com.taskmind.ai.AppTourTest.tourEveryScreen: PASSED
+INFO: Execute com.taskmind.ai.DatabaseTest.callSessionCascadeAndPendingCount: PASSED
+INFO: Execute com.taskmind.ai.DatabaseTest.tasksSubtasksDependenciesAndPriorityOrdering: PASSED

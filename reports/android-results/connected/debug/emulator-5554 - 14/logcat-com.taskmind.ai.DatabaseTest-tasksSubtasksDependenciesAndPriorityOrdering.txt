@@ -1,0 +1,33 @@
+11-08 07:28:16.712  4812  4852 I TestRunner: started: tasksSubtasksDependenciesAndPriorityOrdering(com.taskmind.ai.DatabaseTest)
+11-08 07:28:16.721   519   530 I system_server: Background concurrent copying GC freed 934746(30MB) AllocSpace objects, 38(832KB) LOS objects, 47% free, 26MB/50MB, paused 8.826ms,53us total 2.530s
+11-08 07:28:16.724  5585  5670 I ChimeraConfigurator: Detected pending changes for urgent request: [maps_core]. Pending module sets: container:2318189190800+maps_core
+11-08 07:28:16.732  5569  5569 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.cast.service.BIND_CAST_DEVICE_CONTROLLER_SERVICE pkg=com.google.android.gms }
+11-08 07:28:16.738  5585  5678 I TrustedTime: Skip initializing when trusted time feature disabled. [CONTEXT service_id=326 ]
+11-08 07:28:16.744  5569  5569 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.clearcut.bootcount.service.START pkg=com.google.android.gms }
+11-08 07:28:16.746  5585  5671 W ActiveUnlock: Tried to set empty triggers [CONTEXT service_id=327 ]
+11-08 07:28:16.747  5585  5671 W ChimeraUtils: Module com.google.android.gms.activeunlock_primary missing resource null(0)
+11-08 07:28:16.755  5569  5625 W WearableService: onGetService: Wear is not available on this device.
+11-08 07:28:16.759  5585  5585 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.mobstore.service.START pkg=com.google.android.gms }
+11-08 07:28:16.759  5585  5585 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.languageprofile.service.START pkg=com.google.android.gms }
+11-08 07:28:16.759  5585  5585 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.wallet.service.BIND pkg=com.google.android.gms }
+11-08 07:28:16.764  1601  1931 I AiAiEcho: Predicting[0]:
+11-08 07:28:16.764  1601  1931 I AiAiEcho: EchoTargets:
+11-08 07:28:16.764  1601  1931 I AiAiEcho: Filtered by AiAi flag check:
+11-08 07:28:16.764  1601  1931 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:
+11-08 07:28:16.770  1601  1931 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+11-08 07:28:16.773  5585  5675 I LocationHistory: [IntentOperation] Handling action android.location.PROVIDERS_CHANGED [CONTEXT service_id=314 ]
+11-08 07:28:16.774  5569  5569 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.auth.account.data.service.START pkg=com.google.android.gms }
+11-08 07:28:16.774  5569  5569 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.semanticlocation.service.START_ODLH pkg=com.google.android.gms }
+11-08 07:28:16.776  5585  5585 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.pay.service.BIND dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+11-08 07:28:16.784  5585  5675 I LocationHistory: [IntentOperation] Device settings changed to ENABLED. Scheduling periodic tasks. [CONTEXT service_id=314 ]
+11-08 07:28:16.785  5585  5675 I SemanticLocation: [Scheduler] Periodic Task com.google.android.gms.semanticlocationhistory.deidentifieddata.storevisits.StoreVisitsProcessingService.StoreVisitsProcessing is scheduled to run EVERY_6_HOURS [CONTEXT service_id=173 ]
+11-08 07:28:16.793  5569  5639 I NearbySharing: Not allowed to auto turn on device settings. [CONTEXT service_id=194 ]
+11-08 07:28:16.793  5569  5639 I NearbySharing: A ReceiveSurface(BACKGROUND) has been registered [CONTEXT service_id=194 ]
+11-08 07:28:16.796  5569  5821 I Nearby  : is blocked device type false, isAuto=false, isIot=false, isLatchsky=false, isChinaWearable=false, isTv=false, isWearable=false (supportWearOs=false), isChromeOsDevice=false (supportChromeOs=false) [CONTEXT service_id=49 ]
+11-08 07:28:16.804  5585  5675 I SemanticLocation: [Scheduler] Periodic Task com.google.android.gms.semanticlocationhistory.deidentifieddata.wifi.WifiPlaceVisitProcessingService.WifiPlaceVisit is scheduled to run EVERY_DAY [CONTEXT service_id=173 ]
+11-08 07:28:16.809  5585  5675 I SemanticLocation: [Scheduler] Periodic Task com.google.android.gms.semanticlocationhistory.deidentifieddata.uploads.BatchDeidentifiedDataUploadService.BatchDeidentifiedDataUpload is scheduled to run EVERY_6_HOURS [CONTEXT service_id=173 ]
+11-08 07:28:16.814  5569  5639 I NearbySharing: Stopping advertising because Nearby Sharing is disabled. [CONTEXT service_id=194 ]
+11-08 07:28:16.815  5585  5585 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.wallet.service.BIND pkg=com.google.android.gms }
+11-08 07:28:16.816  5585  5585 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.wallet.service.BIND pkg=com.google.android.gms }
+11-08 07:28:16.827   835   835 D StatusBarIconController: ignoring old pipeline callback because the new wifi icon is enabled
+11-08 07:28:16.828  4812  4852 I TestRunner: finished: tasksSubtasksDependenciesAndPriorityOrdering(com.taskmind.ai.DatabaseTest)
