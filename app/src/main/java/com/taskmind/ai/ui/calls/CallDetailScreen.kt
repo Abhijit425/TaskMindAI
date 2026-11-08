@@ -225,142 +225,10 @@ fun CallDetailScreen(onBack: () -> Unit, onOpenTask: (Long) -> Unit, vm: CallDet
     ) { padding ->
         if (d == null) {
             Text("This conversation was deleted.", Modifier.padding(padding).padding(24.dp))
-            return@Scaffold
-        }
-        val s = d.session
-        val actionable = d.actions.filter { it.type.actionable }
-        val info = d.actions.filter { !it.type.actionable }
-        val pending = actionable.count { it.status == ActionStatus.PENDING }
-
-        LazyColumn(
-            Modifier.fillMaxSize().padding(padding),
-            contentPadding = PaddingValues(start = 18.dp, end = 18.dp, bottom = 40.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            item {
-                TmCard {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Outlined.Person, null, tint = MaterialTheme.colorScheme.primary)
-                        Spacer(Modifier.width(10.dp))
-                        Column(Modifier.weight(1f)) {
-                            Text(s.contactName ?: "Unknown person", style = MaterialTheme.typography.titleMedium)
-                            d.contact?.relation?.let { Text(it, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary) }
-                        }
-                        IconButton(onClick = { editContact = true }) { Icon(Icons.Outlined.Edit, "Edit person") }
-                    }
-                    Spacer(Modifier.height(8.dp))
-                    FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        Pill(s.direction.label, MaterialTheme.colorScheme.primary)
-                        Pill(TimeUtil.formatFull(s.startedAt), MaterialTheme.colorScheme.onSurfaceVariant, icon = Icons.Outlined.Schedule)
-                        s.durationSec?.let { Pill(TimeUtil.formatDuration(it), MaterialTheme.colorScheme.onSurfaceVariant) }
-                        s.phoneNumber?.let { Pill(it, MaterialTheme.colorScheme.onSurfaceVariant, icon = Icons.Outlined.Phone) }
-                        Pill(s.status.label, if (s.status == SessionStatus.READY) tm.success else tm.warning)
-                        s.analyzedBy?.let { Pill("Analyzed: $it", MaterialTheme.colorScheme.secondary, icon = Icons.Outlined.AutoAwesome) }
-                        if (s.audioPath != null) Pill("Encrypted recording", MaterialTheme.colorScheme.onSurfaceVariant, icon = Icons.Outlined.Lock)
-                    }
-                }
-            }
-
-            if (s.audioBlocked) {
-                item {
-                    InfoBanner(
-                        Icons.Outlined.Warning,
-                        "Your phone didn't give TaskMind the call audio. Android lets only the system dialer record calls on most devices. " +
-                            "Import the dialer's own recording, or add a voice note or the key points below.",
-                        Tone.WARNING,
-                    )
-                }
-            }
-            if (s.status == SessionStatus.PROCESSING) {
-                item { InfoBanner(Icons.Outlined.GraphicEq, "Analyzing this conversation…", Tone.INFO) }
-            }
-            if (s.status == SessionStatus.NEEDS_TRANSCRIPT || s.status == SessionStatus.FAILED || !s.lastError.isNullOrBlank()) {
-                item {
-                    InfoBanner(Icons.Outlined.Warning, s.lastError ?: "This conversation needs a transcript.", if (s.status == SessionStatus.READY) Tone.INFO else Tone.WARNING) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            TextButton(onClick = { editTranscript = true }, contentPadding = PaddingValues(0.dp)) { Text("Type key points") }
-                            if (s.audioPath != null && canTranscribe && d.transcripts.isEmpty()) {
-                                TextButton(onClick = { vm.reanalyze() }, contentPadding = PaddingValues(0.dp)) { Text("Transcribe recording") }
-                            }
-                        }
-                    }
-                }
-            }
-
-            s.summary?.let { summary ->
-                item {
-                    TmCard {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Outlined.AutoAwesome, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.width(8.dp))
-                            Text("AI summary", style = MaterialTheme.typography.titleSmall)
-                        }
-                        Spacer(Modifier.height(8.dp))
-                        Text(summary, style = MaterialTheme.typography.bodyMedium)
-                    }
-                }
-            }
-
-            item {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    SectionHeader("Tasks & commitments (${actionable.size})", Modifier.weight(1f))
-                    if (pending > 0) FilledTonalButton(onClick = { vm.approveAll() }) {
-                        Icon(Icons.Outlined.DoneAll, null, Modifier.size(18.dp))
-                        Spacer(Modifier.width(6.dp))
-                        Text("Approve all")
-                    }
-                }
-                if (actionable.isEmpty()) {
-                    Text(
-                        if (s.status == SessionStatus.READY) "Nothing actionable was found. Edit the transcript or add tasks manually." else "Items will appear here after analysis.",
-                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-            items(actionable.sortedBy { it.status.ordinal }, key = { it.id }) { a ->
-                ActionCard(a, onApprove = { vm.approve(a) }, onReject = { vm.reject(a) }, onEdit = { editing = a }, onRestore = { vm.restore(a) }, onOpenTask = onOpenTask)
-            }
-
-            if (info.isNotEmpty()) {
-                item {
-                    SectionHeader("People & numbers")
-                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        info.forEach { a ->
-                            SuggestionChip(
-                                onClick = {},
-                                label = { Text(a.title) },
-                                icon = { Icon(if (a.type == ActionType.PHONE) Icons.Outlined.Phone else Icons.Outlined.Person, null, Modifier.size(16.dp)) },
-                            )
-                        }
-                    }
-                }
-            }
-
-            item {
-                TmCard(Modifier.animateContentSize()) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("Transcript", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
-                        d.transcripts.firstOrNull()?.let { Text(it.source.label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-                        IconButton(onClick = { editTranscript = true }) { Icon(Icons.Outlined.Edit, "Edit transcript") }
-                    }
-                    val text = d.transcriptText
-                    if (text.isBlank()) {
-                        Text("No transcript yet.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    } else {
-                        Text(text, style = MaterialTheme.typography.bodyMedium, maxLines = if (transcriptExpanded) Int.MAX_VALUE else 8)
-                        if (text.length > 400) TextButton(onClick = { transcriptExpanded = !transcriptExpanded }, contentPadding = PaddingValues(0.dp)) {
-                            Text(if (transcriptExpanded) "Show less" else "Show full transcript")
-                        }
-                    }
-                }
-            }
-            item {
-                OutlinedButton(onClick = { vm.reanalyze() }, modifier = Modifier.fillMaxWidth(), enabled = d.transcripts.isNotEmpty() || (s.audioPath != null && canTranscribe)) {
-                    Icon(Icons.Outlined.Refresh, null, Modifier.size(18.dp))
-                    Spacer(Modifier.width(6.dp))
-                    Text("Analyze again")
-                }
-            }
+        } else {
+            CallDetailBody(d, padding, canTranscribe, vm, onOpenTask,
+                onEditTranscript = { editTranscript = true }, onEditContact = { editContact = true },
+                onEditAction = { editing = it }, expanded = transcriptExpanded, onToggleExpanded = { transcriptExpanded = !transcriptExpanded })
         }
     }
 
@@ -515,3 +383,155 @@ private fun EditActionDialog(a: ExtractedActionEntity, onDismiss: () -> Unit, on
         }
     }
 }
+
+
+@Composable
+private fun CallDetailBody(
+    d: CallSessionWithDetails,
+    padding: PaddingValues,
+    canTranscribe: Boolean,
+    vm: CallDetailViewModel,
+    onOpenTask: (Long) -> Unit,
+    onEditTranscript: () -> Unit,
+    onEditContact: () -> Unit,
+    onEditAction: (ExtractedActionEntity) -> Unit,
+    expanded: Boolean,
+    onToggleExpanded: () -> Unit,
+) {
+    val tm = LocalTm.current
+        val s = d.session
+        val actionable = d.actions.filter { it.type.actionable }
+        val info = d.actions.filter { !it.type.actionable }
+        val pending = actionable.count { it.status == ActionStatus.PENDING }
+
+        LazyColumn(
+            Modifier.fillMaxSize().padding(padding),
+            contentPadding = PaddingValues(start = 18.dp, end = 18.dp, bottom = 40.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            item {
+                TmCard {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Outlined.Person, null, tint = MaterialTheme.colorScheme.primary)
+                        Spacer(Modifier.width(10.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(s.contactName ?: "Unknown person", style = MaterialTheme.typography.titleMedium)
+                            d.contact?.relation?.let { Text(it, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary) }
+                        }
+                        IconButton(onClick = onEditContact) { Icon(Icons.Outlined.Edit, "Edit person") }
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Pill(s.direction.label, MaterialTheme.colorScheme.primary)
+                        Pill(TimeUtil.formatFull(s.startedAt), MaterialTheme.colorScheme.onSurfaceVariant, icon = Icons.Outlined.Schedule)
+                        s.durationSec?.let { Pill(TimeUtil.formatDuration(it), MaterialTheme.colorScheme.onSurfaceVariant) }
+                        s.phoneNumber?.let { Pill(it, MaterialTheme.colorScheme.onSurfaceVariant, icon = Icons.Outlined.Phone) }
+                        Pill(s.status.label, if (s.status == SessionStatus.READY) tm.success else tm.warning)
+                        s.analyzedBy?.let { Pill("Analyzed: $it", MaterialTheme.colorScheme.secondary, icon = Icons.Outlined.AutoAwesome) }
+                        if (s.audioPath != null) Pill("Encrypted recording", MaterialTheme.colorScheme.onSurfaceVariant, icon = Icons.Outlined.Lock)
+                    }
+                }
+            }
+
+            if (s.audioBlocked) {
+                item {
+                    InfoBanner(
+                        Icons.Outlined.Warning,
+                        "Your phone didn't give TaskMind the call audio. Android lets only the system dialer record calls on most devices. " +
+                            "Import the dialer's own recording, or add a voice note or the key points below.",
+                        Tone.WARNING,
+                    )
+                }
+            }
+            if (s.status == SessionStatus.PROCESSING) {
+                item { InfoBanner(Icons.Outlined.GraphicEq, "Analyzing this conversation…", Tone.INFO) }
+            }
+            if (s.status == SessionStatus.NEEDS_TRANSCRIPT || s.status == SessionStatus.FAILED || !s.lastError.isNullOrBlank()) {
+                item {
+                    InfoBanner(Icons.Outlined.Warning, s.lastError ?: "This conversation needs a transcript.", if (s.status == SessionStatus.READY) Tone.INFO else Tone.WARNING) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            TextButton(onClick = onEditTranscript, contentPadding = PaddingValues(0.dp)) { Text("Type key points") }
+                            if (s.audioPath != null && canTranscribe && d.transcripts.isEmpty()) {
+                                TextButton(onClick = { vm.reanalyze() }, contentPadding = PaddingValues(0.dp)) { Text("Transcribe recording") }
+                            }
+                        }
+                    }
+                }
+            }
+
+            s.summary?.let { summary ->
+                item {
+                    TmCard {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Outlined.AutoAwesome, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text("AI summary", style = MaterialTheme.typography.titleSmall)
+                        }
+                        Spacer(Modifier.height(8.dp))
+                        Text(summary, style = MaterialTheme.typography.bodyMedium)
+                    }
+                }
+            }
+
+            item {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    SectionHeader("Tasks & commitments (${actionable.size})", Modifier.weight(1f))
+                    if (pending > 0) FilledTonalButton(onClick = { vm.approveAll() }) {
+                        Icon(Icons.Outlined.DoneAll, null, Modifier.size(18.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text("Approve all")
+                    }
+                }
+                if (actionable.isEmpty()) {
+                    Text(
+                        if (s.status == SessionStatus.READY) "Nothing actionable was found. Edit the transcript or add tasks manually." else "Items will appear here after analysis.",
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+            items(actionable.sortedBy { it.status.ordinal }, key = { it.id }) { a ->
+                ActionCard(a, onApprove = { vm.approve(a) }, onReject = { vm.reject(a) }, onEdit = { onEditAction(a) }, onRestore = { vm.restore(a) }, onOpenTask = onOpenTask)
+            }
+
+            if (info.isNotEmpty()) {
+                item {
+                    SectionHeader("People & numbers")
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        info.forEach { a ->
+                            SuggestionChip(
+                                onClick = {},
+                                label = { Text(a.title) },
+                                icon = { Icon(if (a.type == ActionType.PHONE) Icons.Outlined.Phone else Icons.Outlined.Person, null, Modifier.size(16.dp)) },
+                            )
+                        }
+                    }
+                }
+            }
+
+            item {
+                TmCard(Modifier.animateContentSize()) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("Transcript", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
+                        d.transcripts.firstOrNull()?.let { Text(it.source.label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                        IconButton(onClick = onEditTranscript) { Icon(Icons.Outlined.Edit, "Edit transcript") }
+                    }
+                    val text = d.transcriptText
+                    if (text.isBlank()) {
+                        Text("No transcript yet.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    } else {
+                        Text(text, style = MaterialTheme.typography.bodyMedium, maxLines = if (expanded) Int.MAX_VALUE else 8)
+                        if (text.length > 400) TextButton(onClick = onToggleExpanded, contentPadding = PaddingValues(0.dp)) {
+                            Text(if (expanded) "Show less" else "Show full transcript")
+                        }
+                    }
+                }
+            }
+            item {
+                OutlinedButton(onClick = { vm.reanalyze() }, modifier = Modifier.fillMaxWidth(), enabled = d.transcripts.isNotEmpty() || (s.audioPath != null && canTranscribe)) {
+                    Icon(Icons.Outlined.Refresh, null, Modifier.size(18.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text("Analyze again")
+                }
+            }
+        }
+    }

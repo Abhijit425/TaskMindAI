@@ -84,13 +84,18 @@ private enum class TimeTarget { REMINDER, MORNING, EVENING }
 @Composable
 fun SettingsScreen(onOpenPermissions: () -> Unit, vm: SettingsViewModel = hiltViewModel()) {
     val settings by vm.settings.collectAsStateWithLifecycle()
+    val current = settings
+    if (current != null) SettingsContent(current, onOpenPermissions, vm)
+}
+
+@Composable
+private fun SettingsContent(s: AppSettings, onOpenPermissions: () -> Unit, vm: SettingsViewModel) {
     val profile by vm.profile.collectAsStateWithLifecycle()
     val message by vm.message.collectAsStateWithLifecycle()
     val busy by vm.busy.collectAsStateWithLifecycle()
     val snackbar = LocalSnackbar.current
     val context = LocalContext.current
     val tm = LocalTm.current
-    val s = settings ?: return
 
     var timeTarget by remember { mutableStateOf<TimeTarget?>(null) }
     var showCallConsent by remember { mutableStateOf(false) }

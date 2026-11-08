@@ -141,8 +141,13 @@ fun NavHostController.navigateTab(route: String) {
 fun TaskMindRoot(settings: AppSettings, deepLink: PendingDeepLink?, onDeepLinkHandled: () -> Unit) {
     if (!settings.onboardingDone) {
         OnboardingScreen()
-        return
+    } else {
+        MainShell(deepLink, onDeepLinkHandled)
     }
+}
+
+@Composable
+private fun MainShell(deepLink: PendingDeepLink?, onDeepLinkHandled: () -> Unit) {
     val nav = rememberNavController()
     val snackbar = remember { SnackbarHostState() }
     val vm: RootViewModel = hiltViewModel()
