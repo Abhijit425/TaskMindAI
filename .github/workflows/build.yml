@@ -2,7 +2,7 @@ name: Build debug APK
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, ai-reality-scanner ]
   workflow_dispatch:
 
 permissions:
@@ -55,7 +55,8 @@ jobs:
       - name: Publish "latest" release with APK
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: latest
+          tag_name: ${{ github.ref_name == 'main' && 'latest' || 'ai-reality-scanner-latest' }}
+          target_commitish: ${{ github.sha }}
           name: AI Reality Scanner (latest debug build)
           body: Debug APK built from ${{ github.sha }}. Download AIRealityScanner.apk on your phone and install.
           prerelease: true
