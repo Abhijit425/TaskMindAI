@@ -5,7 +5,7 @@ An Android AI vision assistant. Point your phone's camera at something and get a
 Built with Kotlin, Jetpack Compose (Material 3), CameraX, Hilt, Room, DataStore, WorkManager, Retrofit/OkHttp, Google ML Kit and Android's speech APIs.
 The target phone is the **Vivo V40** (Android 14, Funtouch OS). The minimum supported version is Android 10.
 
-> **Status:** The project compiles, and GitHub Actions builds the debug APK. It has **not** been tested on a Vivo V40 or any other physical device. Before relying on it, test it on your own phone (see `documentation/INSTALL_VIVO_V40.md`).
+> **Status:** The project compiles cleanly on GitHub Actions (Gradle 8.11.1 / AGP 8.7.3 / JDK 17), and all JVM unit tests pass. The result is a signed debug APK of about 97 MB (arm64-v8a). It has **not** yet been installed or tested on a Vivo V40 or any other physical device, so please test it on your phone (see `documentation/INSTALL_VIVO_V40.md`).
 
 ---
 
