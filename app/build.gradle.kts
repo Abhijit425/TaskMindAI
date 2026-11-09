@@ -114,7 +114,7 @@ dependencies {
     implementation(libs.mlkit.text.recognition.devanagari)
     implementation(libs.mlkit.barcode.scanning)
     implementation(libs.mlkit.image.labeling)
-    implementation(libs.mlkit.object.detection)
+    implementation(libs.mlkit.objectdetection)
     implementation(libs.mlkit.translate)
     implementation(libs.mlkit.language.id)
 
