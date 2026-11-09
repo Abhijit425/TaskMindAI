@@ -19,8 +19,9 @@ android {
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
-        // Vivo V40 (and nearly every phone sold since 2019) is arm64-v8a. x86_64 kept for emulators.
-        ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
+        // Vivo V40 (and nearly every phone sold since 2019) is arm64-v8a. Only that ABI is packaged
+        // to keep the APK small. To run on an x86_64 emulator, add "x86_64" here.
+        ndk { abiFilters += listOf("arm64-v8a") }
     }
 
     signingConfigs {
@@ -58,6 +59,10 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+        // Compress ML Kit native libraries inside the APK (smaller download; extracted on install).
+        jniLibs {
+            useLegacyPackaging = true
         }
     }
     testOptions {

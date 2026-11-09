@@ -33,4 +33,7 @@ You can also start a build by hand: **Actions → Build debug APK → Run workfl
 Debug builds are signed with the debug keystore committed at `app/debug.keystore` (public, standard password `android`). Because every build uses the same signature, a new APK installs over the old one and your history is kept. For a Play Store release, create your own release keystore and **never** commit it.
 
 ## APK size
-ML Kit's on-device models (OCR, barcode, labelling, object detection) are bundled, so the app works offline. The build includes only `arm64-v8a` (the Vivo V40) and `x86_64` (emulators), which keeps the APK smaller.
+ML Kit's on-device models (OCR, barcode, labelling, object detection, translation runtime) are bundled, so the app works offline. To keep the download small:
+- Only the `arm64-v8a` ABI (the Vivo V40) is packaged. To run on an x86_64 emulator, add `"x86_64"` to `abiFilters` in `app/build.gradle.kts`, or use an arm64 emulator image.
+- Native libraries are stored compressed (`useLegacyPackaging = true`).
+- Debug builds are not minified, so the Material icon set adds size. A release build with `isMinifyEnabled = true` and `isShrinkResources = true` will be much smaller.
