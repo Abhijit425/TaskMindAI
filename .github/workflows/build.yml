@@ -1,0 +1,62 @@
+name: Build debug APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build debug APK
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon --stacktrace assembleDebug
+
+      - name: Copy APK to output/
+        run: |
+          mkdir -p output
+          cp app/build/outputs/apk/debug/app-debug.apk output/AIRealityScanner.apk
+          ls -lh output/
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AIRealityScanner-debug-apk
+          path: output/AIRealityScanner.apk
+
+      - name: Run unit tests
+        run: ./gradlew --no-daemon testDebugUnitTest
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports
+          path: app/build/reports/tests/
+          if-no-files-found: ignore
+
+      - name: Publish "latest" release with APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: AI Reality Scanner (latest debug build)
+          body: Debug APK built from ${{ github.sha }}. Download AIRealityScanner.apk on your phone and install.
+          prerelease: true
+          files: output/AIRealityScanner.apk
